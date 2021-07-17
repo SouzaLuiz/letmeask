@@ -2,13 +2,16 @@ import ilustration from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
+import '../styles/auth.scss';
+import { Button } from '../components/Button';
+
 export function Home() {
   return (
-    <div>
+    <div className="page-auth">
       <aside>
         <img src={ilustration} alt="Ilustração simbolizando perguntas e respostas" />
 
-        <strong>Crie salas de Q&anp;A ao-vivo</strong>
+        <strong>Crie salas de Q&A ao-vivo</strong>
 
         <p>
           Tire as dúvidas da sua audiência em tempo-real
@@ -16,20 +19,20 @@ export function Home() {
       </aside>
 
       <main>
-        <div>
+        <div className="main-content">
           <img src={logoImg} alt="LetMeAsk" />
 
-          <button type="button">
+          <button type="button" className="main-content__btn-create-room">
             <img src={googleIconImg} alt="logo da google" />
             Crie sua sala com google
           </button>
 
-          <div>ou entre em uma sala</div>
+          <div className="main-content__separator">ou entre em uma sala</div>
 
-          <form action="">
+          <form className="main-content__form">
             <input type="text" placeholder="Digite o código da sala" />
 
-            <button type="submit">Entrar na sala</button>
+            <Button type="submit">Entrar na sala</Button>
           </form>
         </div>
       </main>
