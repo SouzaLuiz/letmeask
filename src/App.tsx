@@ -1,10 +1,7 @@
-// import { Home } from './pages/Home';
-import { NewRoom } from './pages/NewRoom';
+import { Routes } from './Routes';
 
 function App() {
-  return (
-    <NewRoom />
-  );
+  return <Routes />;
 }
 
 export default App;
