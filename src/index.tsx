@@ -4,6 +4,7 @@ import App from './App';
 
 import './services/firebase';
 
+import './styles/tailwind.css';
 import './styles/global.scss';
 
 ReactDOM.render(

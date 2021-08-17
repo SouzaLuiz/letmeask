@@ -31,6 +31,8 @@
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",
     "react/react-in-jsx-scope": "off",
+    "import/no-extraneous-dependencies": "off",
+    "global-require": "off",
     "react/jsx-filename-extension": [
       1,
       {

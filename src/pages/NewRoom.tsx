@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import ilustration from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 
-import '../styles/auth.scss';
-
 import { Button } from '../components/Button';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
