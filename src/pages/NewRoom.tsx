@@ -28,15 +28,15 @@ export function NewRoom() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <aside className="hidden sm:flex flex-1 flex-col bg-primary items-start justify-center p-10">
+      <aside className="hidden flex-1 sm:flex  flex-col bg-primary items-start justify-center px-12">
         <AsideHome />
       </aside>
 
       <main className="flex-1 flex items-center justify-center">
-        <div className="flex flex-col items-center w-72">
+        <div className="flex flex-col items-center w-72 sm:w-80">
 
           <img src={logoImg} alt="LetMeAsk" className="w-36" />
-          <h2 className="text-2xl font-bold my-5">Crie uma nova sala</h2>
+          <h2 className="font-heading text-xl font-bold my-5">Crie uma nova sala</h2>
 
           <form className="flex flex-col w-full" onSubmit={handleCreateRoom}>
             <TextField
@@ -49,10 +49,9 @@ export function NewRoom() {
             <Button type="submit">Criar sala</Button>
           </form>
 
-          <p className="text-gray-500 text-center mt-5">
+          <p className="text-sm md:text-base text-gray-500 text-center mt-5">
             Quer entrar em uma sala já existente?
-            {' '}
-            <Link to="/" className="text-secondary underline">Clique aqui</Link>
+            <Link to="/" className="text-secondary underline block">Clique aqui</Link>
           </p>
         </div>
       </main>
