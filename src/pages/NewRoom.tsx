@@ -1,13 +1,13 @@
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import ilustration from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 
 import { Button } from '../components/Button';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
 import { TextField } from '../components/TextField';
+import { AsideHome } from '../components/AsideHome';
 
 export function NewRoom() {
   const [newRoom, setNewRoom] = useState('');
@@ -29,11 +29,7 @@ export function NewRoom() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       <aside className="hidden sm:flex flex-1 flex-col bg-primary items-start justify-center p-10">
-        <img src={ilustration} alt="Ilustração simbolizando perguntas e respostas" className="w-72" />
-
-        <strong className="text-4xl text-white mb-4">Crie salas de Q&A ao-vivo</strong>
-
-        <p className="text-md text-white">Tire as dúvidas da sua audiência em tempo-real</p>
+        <AsideHome />
       </aside>
 
       <main className="flex-1 flex items-center justify-center">
