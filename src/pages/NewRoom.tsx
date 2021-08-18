@@ -26,38 +26,35 @@ export function NewRoom() {
   }
 
   return (
-    <div className="page-auth">
-      <aside>
-        <img src={ilustration} alt="Ilustração simbolizando perguntas e respostas" />
+    <div className="min-h-screen flex flex-col md:flex-row">
+      <aside className="hidden sm:flex flex-1 flex-col bg-primary items-start justify-center p-10">
+        <img src={ilustration} alt="Ilustração simbolizando perguntas e respostas" className="w-72" />
 
-        <strong>Crie salas de Q&A ao-vivo</strong>
+        <strong className="text-4xl text-white mb-4">Crie salas de Q&A ao-vivo</strong>
 
-        <p>
-          Tire as dúvidas da sua audiência em tempo-real
-        </p>
+        <p className="text-md text-white">Tire as dúvidas da sua audiência em tempo-real</p>
       </aside>
 
-      <main>
-        <div className="main-content">
-          <img src={logoImg} alt="LetMeAsk" />
-          <h2>Crie uma nova sala</h2>
+      <main className="flex flex-1 flex-col items-center justify-center">
+        <img src={logoImg} alt="LetMeAsk" />
+        <h2>Crie uma nova sala</h2>
 
-          <form className="main-content__form" onSubmit={handleCreateRoom}>
-            <input
-              type="text"
-              placeholder="Nome da sala"
-              value={newRoom}
-              onChange={(event) => setNewRoom(event.target.value)}
-            />
+        <form className="flex flex-col w-72" onSubmit={handleCreateRoom}>
+          <input
+            type="text"
+            placeholder="Digite o código da sala"
+            className="mb-5 p-4 rounded-md border border-gray-300 text-sm placeholder-gray-400"
+            value={newRoom}
+            onChange={(event) => setNewRoom(event.target.value)}
+          />
 
-            <Button type="submit">Criar sala</Button>
-          </form>
-          <p>
-            Quer entrar em uma sala já existente?
-            {' '}
-            <Link to="/">Clique aqui</Link>
-          </p>
-        </div>
+          <Button type="submit">Criar sala</Button>
+        </form>
+        <p>
+          Quer entrar em uma sala já existente?
+          {' '}
+          <Link to="/">Clique aqui</Link>
+        </p>
       </main>
     </div>
   );
