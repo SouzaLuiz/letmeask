@@ -1,5 +1,7 @@
+/* eslint-disable no-alert */
 import { useHistory } from 'react-router-dom';
 
+import { FormEvent, useState } from 'react';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
@@ -7,15 +9,32 @@ import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
 import { TextField } from '../components/TextField';
 import { AsideHome } from '../components/AsideHome';
+import { database } from '../services/firebase';
 
 export function Home() {
   const history = useHistory();
   const { user, signInWithGoogle } = useAuth();
+  const [roomCode, setRoomCode] = useState('');
 
   async function handleCreateRoom() {
     if (!user) await signInWithGoogle();
 
     history.push('/rooms/new');
+  }
+
+  async function handleJoinRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (roomCode.trim() === '') return;
+
+    const roomRef = await database.ref(`rooms/${roomCode}`).get();
+
+    if (!roomRef.exists()) {
+      alert('Sala não existe');
+      return;
+    }
+
+    history.push(`/rooms/${roomCode}`);
   }
 
   return (
@@ -45,10 +64,12 @@ export function Home() {
           <div className="h-0.5 w-10 bg-gray-300 flex-1" />
         </div>
 
-        <form className="flex flex-col w-72">
+        <form className="flex flex-col w-72" onSubmit={handleJoinRoom}>
           <TextField
             type="text"
             placeholder="Digite o código da sala"
+            value={roomCode}
+            onChange={(event) => setRoomCode(event.target.value)}
           />
 
           <Button type="submit">Entrar na sala</Button>

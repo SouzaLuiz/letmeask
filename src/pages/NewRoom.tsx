@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import logoImg from '../assets/images/logo.svg';
 
@@ -10,6 +10,7 @@ import { TextField } from '../components/TextField';
 import { AsideHome } from '../components/AsideHome';
 
 export function NewRoom() {
+  const history = useHistory();
   const [newRoom, setNewRoom] = useState('');
   const { user } = useAuth();
 
@@ -20,10 +21,12 @@ export function NewRoom() {
 
     const roomRef = database.ref('rooms');
 
-    await roomRef.push({
+    const firebaseRoom = await roomRef.push({
       title: newRoom,
       author: user?.id,
     });
+
+    history.push(`rooms/${firebaseRoom.key}`);
   }
 
   return (
@@ -41,7 +44,7 @@ export function NewRoom() {
           <form className="flex flex-col w-full" onSubmit={handleCreateRoom}>
             <TextField
               type="text"
-              placeholder="Digite o código da sala"
+              placeholder="Nome da sala"
               value={newRoom}
               onChange={(event) => setNewRoom(event.target.value)}
             />
