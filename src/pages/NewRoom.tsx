@@ -7,6 +7,7 @@ import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
+import { TextField } from '../components/TextField';
 
 export function NewRoom() {
   const [newRoom, setNewRoom] = useState('');
@@ -40,10 +41,9 @@ export function NewRoom() {
         <h2>Crie uma nova sala</h2>
 
         <form className="flex flex-col w-72" onSubmit={handleCreateRoom}>
-          <input
+          <TextField
             type="text"
             placeholder="Digite o código da sala"
-            className="mb-5 p-4 rounded-md border border-gray-300 text-sm placeholder-gray-400"
             value={newRoom}
             onChange={(event) => setNewRoom(event.target.value)}
           />

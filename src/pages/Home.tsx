@@ -6,6 +6,7 @@ import googleIconImg from '../assets/images/google-icon.svg';
 
 import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
+import { TextField } from '../components/TextField';
 
 export function Home() {
   const history = useHistory();
@@ -49,10 +50,9 @@ export function Home() {
         </div>
 
         <form className="flex flex-col w-72">
-          <input
+          <TextField
             type="text"
             placeholder="Digite o código da sala"
-            className="mb-5 p-4 rounded-md border border-gray-300 text-sm placeholder-gray-400"
           />
 
           <Button type="submit">Entrar na sala</Button>
