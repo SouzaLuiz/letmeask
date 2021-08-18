@@ -6,6 +6,8 @@ module.exports = {
   theme: {
     colors: {
       primary: '#835AFD',
+      'primary-hover': '#6F4BD8',
+      secondary: '#E559F9',
       danger: '#E73F5D',
       'btn-google': '#EA4335',
       red: colors.red,

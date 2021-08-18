@@ -36,25 +36,29 @@ export function NewRoom() {
         <p className="text-md text-white">Tire as dúvidas da sua audiência em tempo-real</p>
       </aside>
 
-      <main className="flex flex-1 flex-col items-center justify-center">
-        <img src={logoImg} alt="LetMeAsk" />
-        <h2>Crie uma nova sala</h2>
+      <main className="flex-1 flex items-center justify-center">
+        <div className="flex flex-col items-center w-72">
 
-        <form className="flex flex-col w-72" onSubmit={handleCreateRoom}>
-          <TextField
-            type="text"
-            placeholder="Digite o código da sala"
-            value={newRoom}
-            onChange={(event) => setNewRoom(event.target.value)}
-          />
+          <img src={logoImg} alt="LetMeAsk" className="w-36" />
+          <h2 className="text-2xl font-bold my-5">Crie uma nova sala</h2>
 
-          <Button type="submit">Criar sala</Button>
-        </form>
-        <p>
-          Quer entrar em uma sala já existente?
-          {' '}
-          <Link to="/">Clique aqui</Link>
-        </p>
+          <form className="flex flex-col w-full" onSubmit={handleCreateRoom}>
+            <TextField
+              type="text"
+              placeholder="Digite o código da sala"
+              value={newRoom}
+              onChange={(event) => setNewRoom(event.target.value)}
+            />
+
+            <Button type="submit">Criar sala</Button>
+          </form>
+
+          <p className="text-gray-500 text-center mt-5">
+            Quer entrar em uma sala já existente?
+            {' '}
+            <Link to="/" className="text-secondary underline">Clique aqui</Link>
+          </p>
+        </div>
       </main>
     </div>
   );
