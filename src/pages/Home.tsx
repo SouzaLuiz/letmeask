@@ -2,6 +2,7 @@
 import { useHistory } from 'react-router-dom';
 
 import { FormEvent, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
@@ -30,7 +31,7 @@ export function Home() {
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
     if (!roomRef.exists()) {
-      alert('Sala não existe');
+      toast.error('Sala não existe');
       return;
     }
 
@@ -39,6 +40,7 @@ export function Home() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
+      <Toaster />
       <aside className="hidden sm:flex flex-1 flex-col bg-primary items-start justify-center p-10">
         <AsideHome />
       </aside>

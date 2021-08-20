@@ -7,6 +7,7 @@ import headerLogo from '../assets/images/logo.svg';
 import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
+import { RoomCode } from '../components/RoomCode';
 
 type RoomParams = {
   id: string
@@ -46,6 +47,11 @@ export function Room() {
     setNewQuestion('');
   }
 
+  function handlePressRoomCode() {
+    navigator.clipboard.writeText(roomId);
+    toast.success('Código da sala copiado');
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <Toaster />
@@ -53,11 +59,7 @@ export function Room() {
         <div className="max-w-4xl w-full flex justify-between">
           <img src={headerLogo} alt="LetmeAsk Logo" className="w-32" />
 
-          <button type="button">
-            Código
-            {' '}
-            {roomId}
-          </button>
+          <RoomCode code={roomId} onPress={handlePressRoomCode} />
         </div>
       </header>
 
@@ -76,7 +78,7 @@ export function Room() {
             value={newQuestion}
             onChange={(event) => setNewQuestion(event.target.value)}
             placeholder="O que você quer perguntar?"
-            className="resize-none p-4 bg-white w-full rounded-lg h-32 shadow-md"
+            className="resize-none p-4 bg-white w-full rounded-lg h-32 shadow-md focus:border-primary-hover"
           />
 
           <div className="flex justify-between items-center mt-4">
