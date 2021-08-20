@@ -48,8 +48,11 @@ export function Room() {
   }
 
   function handlePressRoomCode() {
-    navigator.clipboard.writeText(roomId);
-    toast.success('Código da sala copiado');
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(roomId);
+      toast.success('Código da sala copiado');
+    }
+    toast.error('Função de copiar não disponível');
   }
 
   return (
