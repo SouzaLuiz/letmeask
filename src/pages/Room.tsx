@@ -129,18 +129,21 @@ export function Room() {
           {questions.map((question) => (
             <Question
               question={question.content}
-              avatarUrl={question.author.avatar}
-              username={question.author.name}
+              author={question.author}
+              isHighlighted={question.isHighlighted}
+              isAnswered={question.isAnswered}
             >
-              <button type="button" onClick={() => handleLikeQuestion(question.id, question.likeId)}>
-                <div className="flex items-center text-gray-500">
-                  <span className="font-heading font-normal mr-2 mt-2">
-                    {question.likeCount}
-                  </span>
+              {!question.isAnswered && (
+                <button type="button" onClick={() => handleLikeQuestion(question.id, question.likeId)}>
+                  <div className="flex items-center text-gray-500">
+                    <span className="font-heading font-normal mr-2 mt-2">
+                      {question.likeCount}
+                    </span>
 
-                  <FiThumbsUp size={24} className={cs('hover:text-primary cursor-pointer', { 'text-primary': question.likeId })} />
-                </div>
-              </button>
+                    <FiThumbsUp size={24} className={cs('hover:text-primary cursor-pointer', { 'text-primary': question.likeId })} />
+                  </div>
+                </button>
+              )}
             </Question>
           ))}
         </section>

@@ -1,5 +1,7 @@
+/* eslint-disable no-alert */
 import { useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import cs from 'classnames';
 
 import { CgCheckO } from 'react-icons/cg';
 import { BiMessage } from 'react-icons/bi';
@@ -11,6 +13,7 @@ import headerLogo from '../assets/images/logo.svg';
 import { useRoom } from '../hooks/useRoom';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
+import { database } from '../services/firebase';
 
 type RoomParams = {
   id: string
@@ -30,6 +33,24 @@ export function AdminRoom() {
       return;
     }
     toast.error('Função de copiar não disponível');
+  }
+
+  async function handleDeleteQuestion(questionId: string) {
+    if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
+      await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
+    }
+  }
+
+  async function handleCheckQuestionAsAnswered(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true,
+    });
+  }
+
+  async function handleHighlightQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighlighted: true,
+    });
   }
 
   return (
@@ -59,16 +80,28 @@ export function AdminRoom() {
 
         {questions.map((question) => (
           <Question
+            key={question.id}
             question={question.content}
-            avatarUrl={question.author.avatar}
-            username={question.author.name}
+            author={question.author}
+            isHighlighted={question.isHighlighted}
+            isAnswered={question.isAnswered}
           >
             <div className="flex items-center justify-center text-gray-500 gap-4">
-              <CgCheckO size={24} className="hover:text-primary cursor-pointer" />
+              {!question.isAnswered && (
+                <>
+                  <button type="button" onClick={() => handleCheckQuestionAsAnswered(question.id)}>
+                    <CgCheckO size={24} className="hover:text-primary cursor-pointer" />
+                  </button>
 
-              <BiMessage size={24} className="hover:text-primary cursor-pointer" />
+                  <button type="button" onClick={() => handleHighlightQuestion(question.id)}>
+                    <BiMessage size={24} className={cs('hover:text-primary cursor-pointer', { 'text-primary': question.isHighlighted })} />
+                  </button>
+                </>
+              )}
 
-              <FiTrash size={24} className="hover:text-primary cursor-pointer" />
+              <button type="button" onClick={() => handleDeleteQuestion(question.id)}>
+                <FiTrash size={24} className="hover:text-primary cursor-pointer" />
+              </button>
             </div>
           </Question>
         ))}

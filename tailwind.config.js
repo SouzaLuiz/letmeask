@@ -7,6 +7,7 @@ module.exports = {
     colors: {
       primary: '#835AFD',
       'primary-hover': '#6F4BD8',
+      primary_light: '#F4F0FF',
       secondary: '#E559F9',
       danger: '#E73F5D',
       'btn-google': '#EA4335',
