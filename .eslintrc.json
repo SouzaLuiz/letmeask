@@ -33,6 +33,7 @@
     "react/react-in-jsx-scope": "off",
     "import/no-extraneous-dependencies": "off",
     "global-require": "off",
+    "camelcase": "off",
     "react/jsx-props-no-spreading":"off",
     "react/require-default-props": "off",
     "react/jsx-filename-extension": [

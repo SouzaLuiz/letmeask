@@ -116,7 +116,7 @@ export function AdminRoom() {
               )}
 
               <button type="button" onClick={() => handleDeleteQuestion(question.id)}>
-                <FiTrash size={24} className="hover:text-primary cursor-pointer" />
+                <FiTrash size={24} className="hover:text-danger cursor-pointer" />
               </button>
             </div>
           </Question>
