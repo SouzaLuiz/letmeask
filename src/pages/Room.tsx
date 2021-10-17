@@ -9,6 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
 import { RoomCode } from '../components/RoomCode';
+import { Question } from '../components/Question';
 
 type RoomParams = {
   id: string
@@ -115,28 +116,20 @@ export function Room() {
 
         <section className="my-8">
           {questions.map((question) => (
-            <div className="bg-white shadow-md p-6 rounded-lg mb-2">
-              <p>{question.content}</p>
+            <Question
+              question={question.content}
+              avatarUrl={question.author.avatar}
+              username={question.author.name}
+            >
 
-              <div className="flex items-center justify-between mt-6">
-                <div className="flex items-center">
-                  <img
-                    src={question.author.avatar}
-                    alt={question.author.name}
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <span className="text-sm ml-2 text-gray-500">{question.author.name}</span>
-                </div>
+              <div className="flex items-center text-gray-500">
+                <span className="font-heading font-normal mr-2 mt-2">
+                  {question.likeCount}
+                </span>
 
-                <div className="flex items-center text-gray-500">
-                  <span className="font-heading font-normal mr-2 mt-2">
-                    {question.likeCount}
-                  </span>
-
-                  <FiThumbsUp size={24} className="hover:text-primary cursor-pointer" />
-                </div>
+                <FiThumbsUp size={24} className="hover:text-primary cursor-pointer" />
               </div>
-            </div>
+            </Question>
           ))}
         </section>
       </main>

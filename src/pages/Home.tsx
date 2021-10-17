@@ -35,7 +35,7 @@ export function Home() {
       return;
     }
 
-    history.push(`/rooms/${roomRef}`);
+    history.push(`/rooms/${roomRef.key}`);
   }
 
   return (
