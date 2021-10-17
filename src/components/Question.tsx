@@ -36,7 +36,9 @@ export function Question({
           <span className="text-sm ml-2 text-gray-500">{author.name}</span>
         </div>
 
-        {children}
+        <div>
+          {children}
+        </div>
       </div>
     </div>
   );

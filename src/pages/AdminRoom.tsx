@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import cs from 'classnames';
 
@@ -8,8 +8,6 @@ import { BiMessage } from 'react-icons/bi';
 import { FiTrash } from 'react-icons/fi';
 
 import headerLogo from '../assets/images/logo.svg';
-// import { useAuth } from '../hooks/useAuth';
-// import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
@@ -20,7 +18,7 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
-  // const { user } = useAuth();
+  const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
 
@@ -53,6 +51,14 @@ export function AdminRoom() {
     });
   }
 
+  async function handleCloseRoom() {
+    if (window.confirm('Tem certeza que você deseja fechar essa sala?')) {
+      await database.ref(`rooms/${roomId}`).remove();
+
+      history.push('/rooms/new');
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center">
       <Toaster />
@@ -60,7 +66,17 @@ export function AdminRoom() {
         <div className="max-w-4xl w-full flex justify-between">
           <img src={headerLogo} alt="LetmeAsk Logo" className="w-32" />
 
-          <RoomCode code={roomId} onPress={handlePressRoomCode} />
+          <div className="flex flex-row items-stretch gap-4">
+            <RoomCode code={roomId} onPress={handlePressRoomCode} />
+
+            <button
+              className="border-primary border-2 px-6 h-12 rounded-md text-primary"
+              type="button"
+              onClick={handleCloseRoom}
+            >
+              Encerrar sala
+            </button>
+          </div>
         </div>
       </header>
 
