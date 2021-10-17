@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import cs from 'classnames';
 
 import { FiThumbsUp } from 'react-icons/fi';
 import { Button } from '../components/Button';
@@ -47,6 +48,16 @@ export function Room() {
 
     toast.success('Pergunta enviada com sucesso');
     setNewQuestion('');
+  }
+
+  async function handleLikeQuestion(questionId: string, likeId: string | undefined) {
+    if (likeId) {
+      await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove();
+    } else {
+      await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
+        authorId: user?.id,
+      });
+    }
   }
 
   function handlePressRoomCode() {
@@ -121,14 +132,15 @@ export function Room() {
               avatarUrl={question.author.avatar}
               username={question.author.name}
             >
+              <button type="button" onClick={() => handleLikeQuestion(question.id, question.likeId)}>
+                <div className="flex items-center text-gray-500">
+                  <span className="font-heading font-normal mr-2 mt-2">
+                    {question.likeCount}
+                  </span>
 
-              <div className="flex items-center text-gray-500">
-                <span className="font-heading font-normal mr-2 mt-2">
-                  {question.likeCount}
-                </span>
-
-                <FiThumbsUp size={24} className="hover:text-primary cursor-pointer" />
-              </div>
+                  <FiThumbsUp size={24} className={cs('hover:text-primary cursor-pointer', { 'text-primary': question.likeId })} />
+                </div>
+              </button>
             </Question>
           ))}
         </section>
