@@ -12,7 +12,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_APP_ID,
 };
 
-console.log(import.meta.env.DATABASE_URL);
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app)
 const auth = getAuth(app)
