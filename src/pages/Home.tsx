@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import { FormEvent, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { child, get, ref, set } from 'firebase/database';
+
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg';
 
@@ -28,14 +30,17 @@ export function Home() {
 
     if (roomCode.trim() === '') return;
 
-    const roomRef = await database.ref(`rooms/${roomCode}`).get();
-
-    if (!roomRef.exists()) {
-      toast.error('Sala não existe');
-      return;
-    }
-
-    history.push(`/rooms/${roomRef.key}`);
+    get(child(ref(database), `rooms/${roomCode}`))
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          history.push(`/rooms/${snapshot.key}`);
+        } else {
+          toast.error('Sala não existe');
+        }
+      })
+      .catch(() => {
+        toast.error('Falha ao entrar na sala');
+      });
   }
 
   return (

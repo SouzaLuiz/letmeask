@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { push, ref, set } from 'firebase/database';
 
 import logoImg from '../assets/images/logo.svg';
 
@@ -19,14 +20,12 @@ export function NewRoom() {
 
     if (newRoom.trim() === '') return;
 
-    const roomRef = database.ref('rooms');
-
-    const firebaseRoom = await roomRef.push({
+    const room = await push(ref(database, 'rooms'), {
       title: newRoom,
       author: user?.id,
-    });
-
-    history.push(`/questions/${firebaseRoom.key}`);
+    })
+  
+    history.push(`/rooms/${room.key}`)
   }
 
   return (

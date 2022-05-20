@@ -1,3 +1,4 @@
+import { onValue, ref, off } from 'firebase/database';
 import { useEffect, useState } from 'react';
 
 import { database } from '../services/firebase';
@@ -35,9 +36,9 @@ export function useRoom(roomId: string) {
   const [title, setTitle] = useState('');
 
   useEffect(() => {
-    const roomRef = database.ref(`rooms/${roomId}`);
+    const roomRef = ref(database, `rooms/${roomId}`);
 
-    roomRef.on('value', (room) => {
+    onValue(roomRef, (room) => {
       const databaseRoom = room.val();
 
       if (databaseRoom) {
@@ -60,7 +61,10 @@ export function useRoom(roomId: string) {
       }
     });
 
-    return () => roomRef.off('value');
+    return () => {
+      off(roomRef);
+    }
+      
   }, [roomId, user?.id]);
 
   return { questions, title };
