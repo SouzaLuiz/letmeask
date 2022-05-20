@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import headerLogo from '../assets/images/logo.svg';
 import { database } from '../services/firebase';
 import { useAuth } from '../hooks/useAuth';
+import { equalTo, off, onValue, orderByChild, query, ref } from 'firebase/database';
 
 type RoomParams = {
   id: string
@@ -28,22 +29,27 @@ export function Dashboard() {
   const roomId = params.id;
 
   useEffect(() => {
-    const room_ref = database.ref('rooms');
+    const room_ref = ref(database, 'rooms');
 
     if (user?.id) {
-      room_ref.orderByChild('author').equalTo(user?.id as string).on('value', (snap) => {
-        const rooms_db: RoomResponse = snap.val();
 
-        const parsedRooms = Object.entries(rooms_db).map(([key, value]) => ({
-          id: key,
-          title: value.title,
-        }));
+      const queryRef = query(room_ref, orderByChild('author'), equalTo(user.id))
 
-        setRooms(parsedRooms);
-      });
+      onValue(queryRef, snapshot => {
+         const rooms_db: RoomResponse = snapshot.val();
+
+         const parsedRooms = Object.entries(rooms_db).map(([key, value]) => ({
+           id: key,
+           title: value.title,
+         }));
+
+         setRooms(parsedRooms);
+      })
     }
 
-    return () => room_ref.off('value');
+    return () => {
+      off(room_ref)
+    };
   }, [user?.id]);
 
   // async function handleDeleteQuestion(questionId: string) {

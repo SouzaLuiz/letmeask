@@ -11,6 +11,7 @@ import { database } from '../services/firebase';
 import { useRoom } from '../hooks/useRoom';
 import { RoomCode } from '../components/RoomCode';
 import { Question } from '../components/Question';
+import { push, ref, remove } from 'firebase/database';
 
 type RoomParams = {
   id: string
@@ -44,19 +45,22 @@ export function Room() {
       isAnswered: false,
     };
 
-    await database.ref(`rooms/${roomId}/questions`).push(question);
-
-    toast.success('Pergunta enviada com sucesso');
-    setNewQuestion('');
+    push(ref(database, `rooms/${roomId}/questions`), question)
+      .then(() => {
+        toast.success('Pergunta enviada com sucesso');
+        setNewQuestion('');
+      });
   }
 
-  async function handleLikeQuestion(questionId: string, likeId: string | undefined) {
+  async function handleLikeQuestion(questionId: string, likeId: string | undefined) {    
     if (likeId) {
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`).remove();
+      const unlikeRef = ref(database, `rooms/${roomId}/questions/${questionId}/likes/${likeId}`);
+      await remove(unlikeRef);
     } else {
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
-        authorId: user?.id,
-      });
+      const likeRef = ref(database, `rooms/${roomId}/questions/${questionId}/likes`);
+      await push(likeRef, {
+        userId: user?.id,
+      })
     }
   }
 
