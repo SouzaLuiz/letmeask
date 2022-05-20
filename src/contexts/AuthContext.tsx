@@ -1,7 +1,8 @@
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import {
   createContext, ReactNode, useEffect, useState,
 } from 'react';
-import { auth, firebase } from '../services/firebase';
+import { auth } from '../services/firebase';
 
 type User = {
   id: string;
@@ -46,10 +47,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, []);
 
   async function signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new GoogleAuthProvider()
 
-    await auth.signInWithPopup(provider);
-    const result = await auth.getRedirectResult();
+    const result = await signInWithPopup(auth, provider);
 
     if (result.user) {
       const { displayName, photoURL, uid } = result.user;
